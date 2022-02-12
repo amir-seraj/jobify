@@ -18,24 +18,28 @@ export default function Register() {
   const handleChange = (e) => {
     console.log(e);
   };
+  const toggleMember = () => {
+    setValues({ ...values, isMember: !values.isMember });
+  };
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={onSubmit}>
         <Logo />
-        <h3>Login</h3>
+        <h3> {values.isMember ? "Login" : "Register"}</h3>
+
         {values.showAlert && <Alert />}
         {/* name input */}
-        <FormRow
-          name="name"
-          labelText="Name"
-          type="text"
-          handleChange={handleChange}
-          value={values.name}
-        />
+        {!values.isMember && (
+          <FormRow
+            name="name"
+            type="text"
+            handleChange={handleChange}
+            value={values.name}
+          />
+        )}
         {/* email input */}
         <FormRow
           name="email"
-          labelText="Email"
           type="text"
           handleChange={handleChange}
           value={values.email}
@@ -43,7 +47,6 @@ export default function Register() {
         {/* password input */}
         <FormRow
           name="password"
-          labelText="Password"
           type="password"
           handleChange={handleChange}
           value={values.password}
@@ -52,6 +55,13 @@ export default function Register() {
           Submit
         </button>
       </form>
+      <p>
+        {values.isMember ? "Not a member yet ?" : "Already a member ?"}
+
+        <button className="btn member-btn" onClick={toggleMember} type="button">
+          {values.isMember ? "Register" : "Login"}
+        </button>
+      </p>
     </Wrapper>
   );
 }
