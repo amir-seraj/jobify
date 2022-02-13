@@ -15,7 +15,6 @@ export default function FormRow({
       <input
         type={type}
         name={name}
-        value={value}
         handleChange={handleChange}
         className="form-input"
       />

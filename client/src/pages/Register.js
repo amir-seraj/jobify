@@ -5,19 +5,25 @@ import { useAppContext } from "../context/appContext";
 
 const initialState = {
   name: "",
-  password: "",
   email: "",
-  isMember: false,
+  password: "",
+  isMember: true,
 };
 
 export default function Register() {
   const [values, setValues] = useState(initialState);
-  const { isLoading, showAlert } = useAppContext();
+  // Global Context
+  const { isLoading, showAlert, displayAlert } = useAppContext();
   const onSubmit = (e) => {
     e.preventDefault();
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      displayAlert();
+      return;
+    }
   };
   const handleChange = (e) => {
-    console.log(e);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -55,14 +61,18 @@ export default function Register() {
         <button type="submit" className="btn btn-block">
           Submit
         </button>
-      </form>
-      <p>
-        {values.isMember ? "Not a member yet ?" : "Already a member ?"}
+        <p>
+          {values.isMember ? "Not a member yet ?" : "Already a member ?"}
 
-        <button className="btn member-btn" onClick={toggleMember} type="button">
-          {values.isMember ? "Register" : "Login"}
-        </button>
-      </p>
+          <button
+            className="btn member-btn"
+            onClick={toggleMember}
+            type="button"
+          >
+            {values.isMember ? "Register" : "Login"}
+          </button>
+        </p>
+      </form>
     </Wrapper>
   );
 }
