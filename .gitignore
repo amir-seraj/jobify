@@ -22,3 +22,5 @@
 /client/yarn-debug.log*
 /client/yarn-error.log*
 README1.MD
+node_modules
+.env
