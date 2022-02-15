@@ -7,10 +7,12 @@ const app = express();
 import connectDB from "./db/connect.js";
 import notFoundMW from "./middlewares/not-found.js";
 import errorHandlerMW from "./middlewares/error-handler.js";
+import authRouter from "./routes/authRoutes.js";
 
 app.get("/", (req, res) => {
   res.send("Welcome");
 });
+app.use("/api/v1/auth", authRouter);
 app.use(notFoundMW);
 app.use(errorHandlerMW);
 
