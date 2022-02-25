@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Alert, Logo, FormRow } from "../components/index";
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { useAppContext } from "../context/appContext";
-
+import { useNavigate } from "react-router-dom";
 const initialState = {
   name: "",
   email: "",
@@ -11,9 +11,10 @@ const initialState = {
 };
 
 export default function Register() {
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
-  // Global Context
-  const { isLoading, showAlert, displayAlert, registerUser } = useAppContext();
+  const { user, isLoading, showAlert, displayAlert, registerUser } =
+    useAppContext();
   const onSubmit = (e) => {
     e.preventDefault();
     const { name, email, password, isMember } = values;
@@ -28,6 +29,13 @@ export default function Register() {
       registerUser(currentUser);
     }
   };
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }
+  }, [user, navigate]);
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };

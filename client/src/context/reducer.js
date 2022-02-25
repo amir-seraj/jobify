@@ -14,16 +14,19 @@ const reducer = (state, action) => {
       alertType: "danger",
       alertText: "Please provide all values!",
     };
-  } else if (action.type === CLEAR_ALERT) {
+  }
+  if (action.type === CLEAR_ALERT) {
     return {
       ...state,
-      showAlert: true,
+      showAlert: false,
       alertType: "",
       alertText: "",
     };
-  } else if (action.type === REGISTER_USER_BEGIN) {
+  }
+  if (action.type === REGISTER_USER_BEGIN) {
     return { ...state, isLoading: true };
-  } else if (action.type === REGISTER_USER_SUCCESS) {
+  }
+  if (action.type === REGISTER_USER_SUCCESS) {
     return {
       ...state,
       user: action.payload.user,
@@ -35,7 +38,8 @@ const reducer = (state, action) => {
       alertType: "success",
       alertText: "User Created! Redirecting...",
     };
-  } else if (action.type === REGISTER_USER_ERROR) {
+  }
+  if (action.type === REGISTER_USER_ERROR) {
     return {
       ...state,
       isLoading: false,

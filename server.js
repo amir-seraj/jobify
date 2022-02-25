@@ -16,9 +16,6 @@ app.use("/api/v1/auth", authRouter);
 app.use(notFoundMW);
 app.use(errorHandlerMW);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is listening on ${process.env.PORT}`);
-});
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL);
