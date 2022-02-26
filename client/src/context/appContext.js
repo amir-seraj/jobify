@@ -9,15 +9,19 @@ import {
   REGISTER_USER_ERROR,
 } from "./action";
 
+const token = localStorage.getItem("token");
+const user = localStorage.getItem("user");
+const userLocation = localStorage.getItem("locatiob");
+
 const initialState = {
   showAlert: false,
   isLoading: false,
   alertText: "",
   alertType: "",
-  user: null,
-  token: null,
-  userLocation: "",
-  jobLocation: "",
+  user: user ? JSON.parse(user) : null,
+  token: token,
+  userLocation: userLocation || "",
+  jobLocation: userLocation || "",
 };
 const AppContext = React.createContext();
 
@@ -50,6 +54,16 @@ export function AppProvider({ children }) {
       });
     }
     clearAlert();
+  };
+  const addUserToLocalStorage = ({ user, token, location }) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+    localStorage.setItem("location", location);
+  };
+  const removeUserFromLocalStorage = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("location");
   };
   return (
     <AppContext.Provider value={{ ...state, displayAlert, registerUser }}>
