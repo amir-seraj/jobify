@@ -1,10 +1,10 @@
 import express from "express";
+const app = express();
 import dotenv from "dotenv";
+dotenv.config();
 import "express-async-errors";
 import morgan from "morgan";
-dotenv.config();
 
-const app = express();
 import connectDB from "./db/connect.js";
 import notFoundMW from "./middlewares/not-found.js";
 import errorHandlerMW from "./middlewares/error-handler.js";
@@ -12,12 +12,6 @@ import authRouter from "./routes/authRoutes.js";
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
-app.get("/", (req, res) => {
-  res.json({ msg: "WELCOME" });
-});
-app.get("/api/v1", (req, res) => {
-  res.json({ msg: "API" });
-});
 app.use("/api/v1/auth", authRouter);
 app.use(notFoundMW);
 app.use(errorHandlerMW);
