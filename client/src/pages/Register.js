@@ -13,7 +13,7 @@ const initialState = {
 export default function Register() {
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
-  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } =
+  const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
   const onSubmit = (e) => {
     e.preventDefault();
@@ -24,9 +24,13 @@ export default function Register() {
     }
     const currentUser = { name, email, password };
     if (isMember) {
-      loginUser(currentUser);
+      setupUser({ currentUser, endPoint: "login", alertText: "Logged in!" });
     } else {
-      registerUser(currentUser);
+      setupUser({
+        currentUser,
+        endPoint: "register",
+        alertText: "Registered!",
+      });
     }
   };
   useEffect(() => {
