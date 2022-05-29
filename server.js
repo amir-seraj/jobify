@@ -5,18 +5,27 @@ dotenv.config();
 import "express-async-errors";
 import morgan from "morgan";
 
+// db and authenticateUser
 import connectDB from "./db/connect.js";
+
+// middleware
 import notFoundMW from "./middlewares/not-found.js";
 import errorHandlerMW from "./middlewares/error-handler.js";
+
+// routers
 import authRouter from "./routes/authRoutes.js";
+
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
+
 app.use("/api/v1/auth", authRouter);
+
 app.use(notFoundMW);
 app.use(errorHandlerMW);
 
 const port = process.env.PORT || 5000;
+
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL);

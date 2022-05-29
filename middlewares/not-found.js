@@ -1,3 +1,3 @@
 export default function notFound(error, req, res, next) {
-  res.send("Route does not exist");
+  res.status(404).send("Route does not exist");
 }

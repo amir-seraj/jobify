@@ -1,10 +1,11 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError } from "./../errors/index.js";
-import UnauthenticatedError from "./../errors/unauthenticated.js";
+import { BadRequestError, UnauthenticatedError } from "./../errors/index.js";
 
 const register = async (req, res, next) => {
+  // get user info form signup form
   const { name, email, password } = req.body;
+  // check signup form
   if (!name || !email || !password) {
     throw new BadRequestError("Please provide all fields!");
   }
@@ -12,7 +13,9 @@ const register = async (req, res, next) => {
   if (userAlreadyExists) {
     throw new BadRequestError("Email already exist!");
   }
+  // build new user
   const user = await User.create({ name, email, password });
+
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({
     user: {
@@ -41,7 +44,6 @@ const login = async (req, res) => {
   const token = user.createJWT();
   user.password = undefined;
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
-  console.log(user);
 };
 const updateUser = async (req, res) => {
   try {

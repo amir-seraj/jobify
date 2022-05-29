@@ -1,7 +1,6 @@
 import React from "react";
 import Wrapper from "../../assets/wrappers/SharedLayout";
-import { Outlet, Link } from "react-router-dom";
-import { AllJobs } from "./index";
+import { Outlet } from "react-router-dom";
 import { SmallSidebar, BigSidebar, Navbar } from "./../../components";
 function SharedLayout() {
   return (
