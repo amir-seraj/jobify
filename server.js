@@ -8,16 +8,18 @@ import morgan from "morgan";
 // db and authenticateUser
 import connectDB from "./db/connect.js";
 
+// routers
+import authRouter from "./routes/authRoutes.js";
+
 // middleware
 import notFoundMW from "./middlewares/not-found.js";
 import errorHandlerMW from "./middlewares/error-handler.js";
 
-// routers
-import authRouter from "./routes/authRoutes.js";
-
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
+
+app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
 

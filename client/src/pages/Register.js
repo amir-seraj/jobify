@@ -36,7 +36,7 @@ export default function Register() {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        navigate("/stats");
+        navigate("/");
       }, 3000);
     }
   }, [user, navigate]);

@@ -5,7 +5,7 @@ import {
   getAllJobs,
   showStats,
   updateJob,
-} from "../controllers/jobsController";
+} from "../controllers/jobsController.js";
 
 const router = express.Router();
 

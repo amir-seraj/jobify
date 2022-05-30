@@ -7,6 +7,8 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
+  TOGGLE_SIDEBAR,
+  LOGOUT_USER,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -21,20 +23,30 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || "",
+  showSidebar: false,
 };
 const AppContext = React.createContext();
 
 function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Alert
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
   };
+
+  // clear alert after 3s
   const clearAlert = () => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
     }, 3000);
   };
+  // Sidebar
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
+  // User
   const addUserToLocalStorage = ({ user, token, location }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
@@ -68,8 +80,21 @@ function AppProvider({ children }) {
     }
     clearAlert();
   };
+  // Logout
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
+  };
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, setupUser }}>
+    <AppContext.Provider
+      value={{
+        ...state,
+        displayAlert,
+        setupUser,
+        toggleSidebar,
+        logoutUser,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

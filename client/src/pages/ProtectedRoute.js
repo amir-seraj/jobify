@@ -4,7 +4,7 @@ import { useAppContext } from "../context/appContext";
 function ProtectedRoute({ children }) {
   const { user } = useAppContext();
   if (!user) {
-    return <Navigate to="/landing"></Navigate>;
+    return <Navigate to="/landing" />;
   }
   return children;
 }
