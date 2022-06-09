@@ -6,6 +6,9 @@ import {
   SETUP_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  // LOGIN_USER_SUCCESS,
+  // LOGIN_USER_ERROR,
+  // LOGIN_USER_BEGIN,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -32,11 +35,11 @@ const reducer = (state, action) => {
   if (action.type === SETUP_USER_SUCCESS) {
     return {
       ...state,
-      user: action.payload.user,
+      isLoading: true,
       token: action.payload.token,
+      user: action.payload.user,
       userLocation: action.payload.location,
       jobLocation: action.payload.location,
-      isLoading: true,
       showAlert: true,
       alertType: "success",
       alertText: action.payload.alertText,

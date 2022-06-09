@@ -21,10 +21,11 @@ const register = async (req, res, next) => {
     user: {
       name: user.name,
       email: user.email,
-      lastName: user.lastName,
       location: user.location,
+      lastName: user.lastName,
     },
     token,
+    location: user.location,
   });
 };
 const login = async (req, res) => {
@@ -37,8 +38,8 @@ const login = async (req, res) => {
     throw new UnauthenticatedError("Invalid Credentials");
   }
 
-  const isPassword = await user.comparePassword(password);
-  if (!isPassword) {
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
     throw new UnauthenticatedError("Invalid Credentials");
   }
   const token = user.createJWT();

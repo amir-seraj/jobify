@@ -26,9 +26,37 @@ const initialState = {
   showSidebar: false,
 };
 const AppContext = React.createContext();
-
 function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // axios
+  const authFetch = axios.create({
+    baseURL: "http://localhost:5000/api/v1/",
+  });
+  // request
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers.common["Authorization"] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+  // response
+
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      // console.log(error.response)
+      if (error.response.status === 401) {
+        logoutUser();
+      }
+      return Promise.reject(error);
+    }
+  );
 
   // Alert
   const displayAlert = () => {
@@ -57,16 +85,16 @@ function AppProvider({ children }) {
     localStorage.removeItem("user");
     localStorage.removeItem("location");
   };
+
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
       const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
+        `http://localhost:5000/api/v1/auth/${endPoint}`,
         currentUser
       );
 
       const { user, token, location } = data;
-
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: { user, token, location, alertText },
