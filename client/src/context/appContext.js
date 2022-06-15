@@ -113,6 +113,10 @@ function AppProvider({ children }) {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
   };
+  //Update User
+  const updateUser=async (currentUser)=>{
+    console.log(currentUser)
+  }
   return (
     <AppContext.Provider
       value={{
@@ -121,6 +125,7 @@ function AppProvider({ children }) {
         setupUser,
         toggleSidebar,
         logoutUser,
+        updateUser
       }}
     >
       {children}

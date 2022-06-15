@@ -27,6 +27,7 @@ const register = async (req, res, next) => {
     token,
     location: user.location,
   });
+  next();
 };
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -47,10 +48,20 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 const updateUser = async (req, res) => {
-  try {
-    await res.send("updateUser");
-  } catch (error) {
-    console.log(error);
+  const { name,lastName, email, location } = req.body;
+  // check update profile form
+  if (!name || !email || !location||!lastName) {
+    throw new BadRequestError("Please provide all fields!");
   }
+const user=await User.findOne({_id:req.user.userId})
+  user.email=email;
+  user.name=name;
+  user.lastName=lastName;
+  user.location=location;
+  await user.save();
+  const token=user.createJwt();
+  res.status(StatusCodes.OK).json({
+    user,token,location:user.location
+  })
 };
 export { register, login, updateUser };

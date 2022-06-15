@@ -6,9 +6,6 @@ import {
   SETUP_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
-  // LOGIN_USER_SUCCESS,
-  // LOGIN_USER_ERROR,
-  // LOGIN_USER_BEGIN,
 } from "./action";
 import { initialState } from "./appContext";
 
