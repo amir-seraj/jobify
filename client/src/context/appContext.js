@@ -31,7 +31,7 @@ function AppProvider({ children }) {
 
   // axios
   const authFetch = axios.create({
-    baseURL: "http://localhost:5000/api/v1/",
+    baseURL: "/api/v1/",
   });
   // request
   authFetch.interceptors.request.use(
@@ -90,7 +90,7 @@ function AppProvider({ children }) {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/v1/auth/${endPoint}`,
+        `/api/v1/auth/${endPoint}`,
         currentUser
       );
 
@@ -115,7 +115,17 @@ function AppProvider({ children }) {
   };
   //Update User
   const updateUser=async (currentUser)=>{
-    console.log(currentUser)
+    try {
+      const{data}=await axios.patch("api/v1/auth/updateUser",currentUser,{
+        headers:{
+          Authorization:`Bearer ${state.token}`
+        }
+      })
+      console.log(data)
+    }
+    catch (error){
+      console.log(error.response)
+    }
   }
   return (
     <AppContext.Provider

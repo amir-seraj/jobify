@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "./../errors/index.js";
 
-const register = async (req, res, next) => {
+const register = async (req, res) => {
   // get user info form signup form
   const { name, email, password } = req.body;
   // check signup form
@@ -27,7 +27,6 @@ const register = async (req, res, next) => {
     token,
     location: user.location,
   });
-  next();
 };
 const login = async (req, res) => {
   const { email, password } = req.body;

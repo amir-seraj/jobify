@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 
-export default function errorHandlerMiddleware(err, req, res, next) {
+const errorHandlerMiddleware=(err, req, res, next) =>{
   const defaultError = {
     statusCode: err.statusCodes || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Something went wrong, try again later!",
@@ -17,4 +17,6 @@ export default function errorHandlerMiddleware(err, req, res, next) {
     defaultError.msg = `${Object.keys(err.keyValue)} field has to be unique`;
   }
   res.status(defaultError.statusCode).json({ msg: defaultError.msg });
+  next();
 }
+export default errorHandlerMiddleware

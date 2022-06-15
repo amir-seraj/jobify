@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import "express-async-errors";
 import morgan from "morgan";
-import cors from "cors";
+
 // db and authenticateUser
 import connectDB from "./db/connect.js";
 
@@ -18,12 +18,6 @@ import errorHandlerMW from "./middlewares/error-handler.js";
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
-
-app.use(
-  cors({
-    origin: "*",
-  })
-);
 
 app.use(express.json());
 
