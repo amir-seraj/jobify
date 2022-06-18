@@ -9,6 +9,9 @@ import {
   SETUP_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_ERROR,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -115,17 +118,17 @@ function AppProvider({ children }) {
   };
   //Update User
   const updateUser=async (currentUser)=>{
+    dispatch({type : UPDATE_USER_BEGIN})
     try {
-      const{data}=await axios.patch("api/v1/auth/updateUser",currentUser,{
-        headers:{
-          Authorization:`Bearer ${state.token}`
-        }
-      })
-      console.log(data)
+      const{data}=await authFetch.patch("/auth/updateUser",currentUser)
+      const {user,location,token}=data;
+      dispatch({type:UPDATE_USER_SUCCESS ,payload:{user,location,token}})
+      addUserToLocalStorage({user,token,location})
     }
     catch (error){
-      console.log(error.response)
+      dispatch({type:UPDATE_USER_ERROR,payload:{msg:error.response.data.msg}})
     }
+    clearAlert();
   }
   return (
     <AppContext.Provider
