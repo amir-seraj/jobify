@@ -37,6 +37,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "prettier": "2.7.1"
   }
 }
