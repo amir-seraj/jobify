@@ -10,10 +10,12 @@ import connectDB from "./db/connect.js";
 
 // routers
 import authRouter from "./routes/authRoutes.js";
+import jobsRouter from "./routes/jobsRoutes.js";
 
 // middleware
 import notFoundMW from "./middlewares/not-found.js";
 import errorHandlerMW from "./middlewares/error-handler.js";
+import authenticatedUser from"./middlewares/auth.js"
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -22,6 +24,7 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/jobs", authenticatedUser,jobsRouter);
 
 app.use(notFoundMW);
 app.use(errorHandlerMW);
