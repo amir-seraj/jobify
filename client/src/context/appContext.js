@@ -19,6 +19,7 @@ import {
   CREATE_JOB_ERROR,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
+  SET_EDIT_JOB,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -201,7 +202,10 @@ function AppProvider({ children }) {
     clearAlert();
   };
   const setEditJob = (id) => {
-    console.log(id);
+    dispatch({ type: SET_EDIT_JOB, payload: { id } });
+  };
+  const editJob = () => {
+    console.log("edit");
   };
 
   const deleteJob = (id) => {
@@ -222,6 +226,7 @@ function AppProvider({ children }) {
         getJobs,
         setEditJob,
         deleteJob,
+        editJob,
       }}
     >
       {children}
