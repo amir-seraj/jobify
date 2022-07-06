@@ -20,7 +20,6 @@ import {
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
 } from "./action";
-import { useEffect } from "react";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -201,7 +200,13 @@ function AppProvider({ children }) {
     }
     clearAlert();
   };
+  const setEditJob = (id) => {
+    console.log(id);
+  };
 
+  const deleteJob = (id) => {
+    console.log(id);
+  };
   return (
     <AppContext.Provider
       value={{
@@ -214,6 +219,9 @@ function AppProvider({ children }) {
         handleChange,
         clearValues,
         createJob,
+        getJobs,
+        setEditJob,
+        deleteJob,
       }}
     >
       {children}
