@@ -21,12 +21,14 @@ function JobsContainer() {
   }
   return (
     <Wrapper>
-      <h3>
-        {totalJobs} job{jobs.length > 1 ? "s" : ""} found
-      </h3>
-      {jobs.map((job) => {
-        return <Job key={job._id} {...job} />;
-      })}
+      <h5>
+        {totalJobs} job{jobs.length > 1 && "s"} found
+      </h5>
+      <div className="jobs">
+        {jobs.map((job) => {
+          return <Job key={job._id} {...job} />;
+        })}
+      </div>
       {/* Pagination */}
     </Wrapper>
   );

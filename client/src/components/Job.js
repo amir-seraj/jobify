@@ -36,7 +36,11 @@ function Job({
         </div>
         <footer>
           <div className="actions">
-            <Link className="btn edit-btn" onClick={() => setEditJob(_id)}>
+            <Link
+              to="/add-job"
+              className="btn edit-btn"
+              onClick={() => setEditJob(_id)}
+            >
               Edit
             </Link>
             <button
