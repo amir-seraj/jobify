@@ -17,19 +17,27 @@ const createJob = async (req, res) => {
   const job = await Job.create(req.body);
   res.status(StatusCodes.CREATED).json({ job });
 };
+
 const deleteJob = async (req, res) => {
-  try {
-    await res.send("deleteJob");
-  } catch (error) {
-    console.log(error);
+  const { id: jobId } = req.params;
+  const job = await Job.findOne({ _id: jobId });
+  if (!job) {
+    throw new NotFound(`No job with id ${jobId}`);
   }
+
+  checkPermission(req.user, job.createdBy);
+
+  await job.remove();
+  res.status(StatusCodes.OK).json({ msg: "Successfully! Job removed." });
 };
+
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find({ createdBy: req.user.userId });
   res
     .status(StatusCodes.OK)
     .json({ jobs, totalJob: jobs.length, numOfPages: 1 });
 };
+
 const updateJob = async (req, res) => {
   const { id: jobId } = req.params;
   const { company, position } = req.body;
