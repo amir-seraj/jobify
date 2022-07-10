@@ -10,11 +10,13 @@ import JobsContainer from "./JobsContainer";
 import StatsContainer from "./StatsContainer";
 import ChartsContainer from "./ChartsContainer";
 import StatsItem from "./StatsItem";
+import Loading from "./Loading";
 export {
   Alert,
   Logo,
   FormRow,
   Navbar,
+  Loading,
   SmallSidebar,
   BigSidebar,
   FormRowSelect,
